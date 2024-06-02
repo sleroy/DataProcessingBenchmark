@@ -61,16 +61,35 @@ dotnet run -- [options]
 ### SQL Server
 
 ```bash
-dotnet run -- -d SqlServer -c "Server=your_server;Database=your_db;User Id=your_user;Password=your_password;" -b 1000 -t 4 -r 10000
+dotnet run -- -d SqlServer -c "Server=your_server;Database=your_db;User Id=your_user;Password=your_password;TrustServerCertificate=True" -b 1000 -t 4 -r 10000
 ```
 
 Replace your_server, your_db, your_user, and your_password with the appropriate values for your SQL Server instance.
+
+How to launch a DOcker image to test : 
+
+```bash
+sudo docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=<YourStrong@Passw0rd>" \
+   -p 1433:1433 --name sql1 --hostname sql1 \
+   -d \
+   mcr.microsoft.com/mssql/server:2022-latest
+
+dotnet run -- -d SqlServer -c "Server=localhost;Database=TestDB;User Id=SA;Password=YourStrong@Passw0rd;" -b 1000 -t 4 -r 10000
+
+```
 
 ### Redis
 
 ```bash
 dotnet run -- -d Redis -c "localhost" -b 1000 -t 4 -r 10000
 ```
+
+How to launch a DOcker image to test :
+
+```bash
+docker run -p 6379:6379 --name redis -d redis:latest
+```
+
 
 ### License
 
